@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BIRTHDAY MESSAGE</title>
+  <style>
+    body {
+      background-color: lightblue;
+      color: black;
+      font-family: "Times New Roman", Times, serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+        background: url('birth.jpg') no-repeat center center fixed;
+  background-size: cover;
+    }
+
+    h1 {
+      margin-top: 20%;
+      text-align: center;
+    }
+    .bg-image-section {
+  width: 90%;
+  height: 300px; /* You can adjust the height */
+  background: url('pic1.jpg') no-repeat center center;
+  background-size: cover;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  margin-bottom: 20px;
+}
+
+
+
+    .message-box {
+      display: none;
+      position: fixed;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 350px;
+      padding: 20px;
+      background-color: lightpink;
+      border: 2px solid #aaa;
+      box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+      z-index: 9999;
+      text-align: center;
+      border-radius: 30px;
+    }
+
+    .message-header {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .ok-btn, .previous-btn, .start-btn, .end-btn {
+      margin-top: 10px;
+      padding: 8px 20px;
+      background-color: #d0e6f9;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 5px;
+    }
+
+    .start-btn {
+      font-size: 16px;
+    }
+
+    .media-content {
+      margin-top: 10px;
+    }
+
+    .media-content img, .media-content video {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .image-gallery {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .image-gallery img {
+      width: 100px;
+      margin: 5px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-image-section">
+  <h2 style="color: white; text-align: center; padding-top: 100px;">🎂 HAPPIEST BIRTHDAY MICHAEL SUMAYANG JR. 🎂</h2>
+</div>
+
+
+  <button class="start-btn" onclick="startMessages()">START</button>
+
+  <audio id="bgMusic" autoplay loop>
+    <source src="vi1.mp4" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div id="messageBox" class="message-box">
+    <div class="message-header">Note</div>
+    <div id="messageText">Message goes here...</div>
+
+    <div class="media-content" id="mediaContent"></div>
+
+    <div class="image-gallery" id="finalImages">
+      <img src="pic1.jpg" alt="BABOY">
+      <img src="pic2.jpg" alt="SHOCKED YARN">
+      <img src="pic3.jpg " alt="CRY MANANG BABY NA">
+      <img src="pic4.jpg" alt="SMILEY BOY">
+    </div>
+
+    <div id="buttonGroup">
+      <button class="previous-btn" onclick="showPreviousMessage()" id="prevBtn">PREVIOUS</button>
+      <button class="ok-btn" onclick="showNextMessage()" id="okBtn">OK</button>
+    </div>
+
+    <button class="end-btn" onclick="endMessage()" id="endBtn" style="display: none;">THE END</button>
+  </div>
+
+  <script>
+    const messageData = [
+      {
+        text: "E CLICK PARA MAKA KITA KA HAHAHAHA ",
+        media: null
+      },
+      {
+        text: "CRY MANANG BABY NA",
+        media: { type: "image", src: "pic3.jpg" }
+      },
+      {
+        text: "SELFIE WITH MOTHER",
+        media: { type: "image", src: "IMG1.JPG" }
+      },
+      {
+        text: "MURA MAG WATI-WATI MO SAYAW",
+        media: { type: "video", src: "video.mp4" }
+      },
+      {
+        text: "HAHAHAHHAHA",
+        media: { type: "video", src: "video1.mp4" }
+      },
+      {
+        text: "SLIDE PERO 3FT!",
+        media: { type: "video", src: "video2.mp4" }
+      },
+      {
+        text: "MAYPAG BATA NALANG KA HAHAHAHHAHA",
+        media: { type: "image", src: "pic4.jpg" }
+      },
+    
+    ];
+
+    let currentIndex = 0;
+
+    function startMessages() {
+      currentIndex = 0;
+      document.getElementById('messageBox').style.display = 'block';
+      document.getElementById('finalImages').style.display = 'none';
+      showMessage(currentIndex);
+    }
+
+    function showMessage(index) {
+      const message = messageData[index];
+      document.getElementById('messageText').textContent = message.text;
+
+      const mediaContent = document.getElementById('mediaContent');
+      mediaContent.innerHTML = "";
+
+      if (message.media) {
+        if (message.media.type === "image") {
+          const img = document.createElement("img");
+          img.src = message.media.src;
+          mediaContent.appendChild(img);
+        } else if (message.media.type === "video") {
+          const video = document.createElement("video");
+          video.controls = true;
+          video.src = message.media.src;
+          video.autoplay = true;
+          video.loop = true;
+          mediaContent.appendChild(video);
+        }
+      }
+    }
+
+    function showNextMessage() {
+      currentIndex++;
+      if (currentIndex < messageData.length) {
+        showMessage(currentIndex);
+        document.getElementById('finalImages').style.display = 'none';
+        document.getElementById('buttonGroup').style.display = 'block';
+        document.getElementById('endBtn').style.display = 'none';
+      } else {
+        document.getElementById('messageText').textContent = "";
+        document.getElementById('mediaContent').innerHTML = "";
+        document.getElementById('finalImages').style.display = 'block';
+        document.getElementById('buttonGroup').style.display = 'none';
+        document.getElementById('endBtn').style.display = 'inline-block';
+      }
+    }
+
+    function showPreviousMessage() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showMessage(currentIndex);
+        document.getElementById('finalImages').style.display = 'none';
+        document.getElementById('buttonGroup').style.display = 'block';
+        document.getElementById('endBtn').style.display = 'none';
+      }
+    }
+
+    function endMessage() {
+      document.getElementById('messageBox').style.display = 'none';
+      alert("unya na lingaw raka?? HAAHHAHA");
+    }
+  </script>
+</body>
+</html>
